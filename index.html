@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Search Page</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 80px;
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4285f4;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        /* Search Container */
+        .search-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease-out 0.3s forwards;
+        }
+
+        /* Search Box */
+        .search-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            outline: none;
+            background-color: white;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-icon:hover {
+            color: #4285f4;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Search Buttons */
+        .search-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out 0.6s forwards;
+        }
+
+        .search-btn {
+            padding: 12px 24px;
+            background-color: #f1f3f4;
+            border: none;
+            border-radius: 5px;
+            color: #5f6368;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .search-btn:hover {
+            background-color: #e8eaeb;
+            color: #202124;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Results Section */
+        .results-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .result-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            color: #1a0dab;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .result-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s ease;
+        }
+
+        .result-title a:hover {
+            color: #4285f4;
+        }
+
+        .result-url {
+            color: #006621;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .result-description {
+            color: #545454;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 30px 0;
+            text-align: center;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 40px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .search-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .result-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">Searchly</div>
+        <div class="tagline">Find what you're looking for</div>
+    </header>
+
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search the web..." id="searchInput">
+            <div class="search-icon" id="searchButton">🔍</div>
+        </div>
+    </div>
+
+    <div class="search-buttons">
+        <button class="search-btn">Web Search</button>
+        <button class="search-btn">Images</button>
+        <button class="search-btn">Videos</button>
+        <button class="search-btn">News</button>
+    </div>
+
+    <div class="results-container" id="resultsContainer">
+        <!-- Results will be dynamically inserted here -->
+    </div>
+
+    <footer>
+        &copy; 2023 Searchly. All rights reserved.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            // Sample search results data
+            const sampleResults = [
+                {
+                    title: "How to build a modern search page with animations",
+                    url: "https://example.com/search-page-tutorial",
+                    description: "Learn how to create a beautiful search page with smooth animations using HTML, CSS and JavaScript. This tutorial will guide you through the process step by step."
+                },
+                {
+                    title: "CSS Animation Techniques for Modern Web Design",
+                    url: "https://example.com/css-animations",
+                    description: "Discover the latest CSS animation techniques to make your website stand out. From hover effects to page transitions, we cover it all."
+                },
+                {
+                    title: "JavaScript Search Functionality Implementation",
+                    url: "https://example.com/js-search",
+                    description: "A comprehensive guide to implementing search functionality in your web applications using vanilla JavaScript."
+                },
+                {
+                    title: "UI/UX Design Trends for 2023",
+                    url: "https://example.com/design-trends",
+                    description: "Explore the top UI/UX design trends that will dominate in 2023, including micro-interactions, glass morphism, and more."
+                }
+            ];
+            
+            // Function to display results
+            function displayResults(results) {
+                resultsContainer.innerHTML = '';
+                
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = '<p style="text-align: center; color: #666;">No results found. Try a different search term.</p>';
+                    return;
+                }
+                
+                results.forEach(result => {
+                    const resultCard = document.createElement('div');
+                    resultCard.className = 'result-card';
+                    resultCard.innerHTML = `
+                        <h3 class="result-title"><a href="${result.url}" target="_blank">${result.title}</a></h3>
+                        <span class="result-url">${result.url}</span>
+                        <p class="result-description">${result.description}</p>
+                    `;
+                    resultsContainer.appendChild(resultCard);
+                });
+                
+                // Show results container with animation
+                setTimeout(() => {
+                    resultsContainer.style.opacity = '1';
+                    resultsContainer.style.transform = 'translateY(0)';
+                }, 50);
+            }
+            
+            // Search function
+            function performSearch() {
+                const query = searchInput.value.trim();
+                
+                if (query === '') {
+                    resultsContainer.style.opacity = '0';
+                    resultsContainer.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        resultsContainer.innerHTML = '';
+                    }, 300);
+                    return;
+                }
+                
+                // In a real app, you would make an API call here
+                // For demo purposes, we'll filter our sample results
+                const filteredResults = sampleResults.filter(result => 
+                    result.title.toLowerCase().includes(query.toLowerCase()) || 
+                    result.description.toLowerCase().includes(query.toLowerCase())
+                );
+                
+                displayResults(filteredResults.length > 0 ? filteredResults : sampleResults);
+            }
+            
+            // Event listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Initialize with some results
+            setTimeout(() => {
+                displayResults(sampleResults);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
